@@ -89,6 +89,20 @@ public class ChooseAreaFragment extends Fragment {
                     selectedCity = cityList.get(position);
                     queryCounties();
                 }
+                else if (currentLevel == LEVE_COUNTY){
+                    String weatherId = countyList.get(position).getWeatherId();
+                    if (getActivity() instanceof  MainActivity) {
+                        Intent intent = new Intent(getActivity(), MainActivity.class);
+                        intent.putExtra("weather_id", weatherId);
+                        startActivity(intent);
+                        getActivity().finish();
+                    }else if (getActivity() instanceof  MainActivity){
+                        MainActivity activity =(MainActivity) getActivity();
+                        activity.drawerLayout.closeDrawers();
+                        activity.swipeRefresh.setRefreshing(true);
+                        activity.requestWeather(weatherId);
+                    }
+                }
             }
         });
         backButton.setOnClickListener(new View.OnClickListener() {
